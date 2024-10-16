@@ -3,7 +3,7 @@ from random import randint
 
 logger = getLogger()
 FORMAT = '%(asctime)s : %(name)s : %(levelname)s : %(message)s'
-file_handler = FileHandler("data.log")
+file_handler = FileHandler("data.log", mode="w")
 file_handler.setLevel(DEBUG)
 console = StreamHandler()
 console.setLevel(ERROR)
@@ -12,21 +12,49 @@ basicConfig(level=DEBUG, format=FORMAT, handlers=[file_handler, console])
 logger.info('калькулятор квадратного уравнения запущен')
 
 
-def check_value_by_zero(value: int):
-    logger.debug("value is %s", value)
-    if value == 0:
-        raise ValueError('a не должно равняться нулю, так как уравнение перестаёт быть квадратичным')
+def check_value_by_zero(value: str, value_name: str, func_name: str):
+    while True:
+        print(f'Если захотите закрыть калькулятор, введите "стоп"')
+        value = input(f'или введите значение не равное нулю\n{value_name}: ')
+        logger.debug(f'в функцию check_value_is_number поданы значения {value} и {value_name}')
+
+        if value == '':
+            print('Вы ничего не ввели. Здесь должны быть только цифры. Повторите ввод')
+            continue
+        elif value == 'стоп':
+            print(f'{func_name} завершает свою работу')
+            return 'стоп'
+        try:
+            float(value)
+        except Exception:
+            print('Вы ввели не число. Повторите ввод')
+            continue
+        else:
+            if float(value) == 0:
+                print('Вы ввели 0. При нуле функция перестаёт быть квадратичной. Повторите ввод')
+                continue
+            else:
+                return value
 
 
-def check_value_is_number(value: str):
-    logger.debug("value is %s", value)
-    if value == '':
-        raise ValueError('Вы ничего не ввели. Здесь должны быть только цифры.')
-    try:
-        float(value)
-        return value
-    except ValueError:
-        raise ValueError('Вы ввели не число. Повторите ввод.')
+def check_value_is_number(value: str, value_name: str, func_name: str):
+    while True:
+        print(f'Если захотите закрыть калькулятор, введите "стоп"')
+        value = input(f'или введите значение не равное нулю\n{value_name}: ')
+        logger.debug(f'в функцию check_value_is_number поданы значения {value} и {value_name}')
+
+        if value == '':
+            print('Вы ничего не ввели. Здесь должны быть только цифры. Повторите ввод')
+            continue
+        elif value == 'стоп':
+            print(f'{func_name} завершает свою работу')
+            return 'стоп'
+        try:
+            float(value)
+            return value
+        except Exception:
+            print('Вы ввели не число. Повторите ввод')
+            continue
 
 
 print('Вашему вниманию калькулятор расчёта квадратного уравнения.')
@@ -35,74 +63,28 @@ print('Введите параметры уравнения, где a не ра�
 
 
 def quadratic_equation():
-    a = input('Введите значение не равное нулю\na: ')
-    logger.debug("a is %s", a)
 
-    while True:
-        try:
-            a = check_value_is_number(a)
-            logger.debug("a is %s", a)
-            break
-        except ValueError as e:
-            logger.error("exception is %s", ValueError)
-            print(e)
-            a = input('Если хотите закрыть калькулятор, введите "exit" или введите a: ')
-            if a == 'exit':
-                return print('Калькулятор завершил свою работу')
+    a = ''
+    a = check_value_by_zero(a, 'a', 'Калькулятор среднего арифметического')
 
-    while int(a) == 0:
-        try:
-            check_value_by_zero(int(a))
-            break
-        except ValueError as e:
-            logger.error("exception is %s", ValueError)
-            print(e)
-            a = input('Введите значение не равное нулю. Введите a: ')
-            while a != 'exit':
-                try:
-                    a = check_value_is_number(a)
-                    logger.debug("a is %s", a)
-                    break
-                except ValueError as e:
-                    logger.error("exception is %s", ValueError)
-                    print(e)
-                    a = input('Если хотите закрыть калькулятор, введите "exit" или введите a: ')
-                    if a == 'exit':
-                        return print('Калькулятор завершил свою работу')
+    if a == 'стоп':
+        return
 
     a = int(a)
 
-    b = input('Введите b: ')
-    logger.debug("b is %s", b)
-
-    while True:
-        try:
-            b = check_value_is_number(b)
-            break
-        except ValueError as e:
-            logger.error("exception is %s", ValueError)
-            print(e)
-            b = input('Если хотите закрыть калькулятор, введите "exit" или введите b: ')
-            if b == 'exit':
-                return print('Калькулятор завершил свою работу')
-
+    b = ''
+    b = check_value_is_number(b, 'b', 'Калькулятор среднего арифметического')
     b = int(b)
 
-    c = input('Введите c: ')
-    logger.debug("c is %s", c)
+    if b == 'стоп':
+        return
 
-    while True:
-        try:
-            c = check_value_is_number(c)
-            break
-        except ValueError as e:
-            logger.error("exception is %s", ValueError)
-            print(e)
-            c = input('Если хотите закрыть калькулятор, введите "exit" или введите c: ')
-            if c == 'exit':
-                return print('Калькулятор завершил свою работу')
-
+    c = ''
+    c = check_value_is_number(c, 'c', 'Калькулятор среднего арифметического')
     c = int(c)
+
+    if c == 'стоп':
+        return
 
     d = b ** 2 - 4 * a * c
 
@@ -133,33 +115,19 @@ print('Введите два числа, внутри которых нужно 
 
 def random_number_from_range():
 
-    d1 = input('Введите левую границу диапазона, d1: ')
-    logger.debug("d1 is %s", d1)
+    d1 = ''
+    d1 = check_value_is_number(d1, 'd1', 'Функция поиска случайного числа в диапазоне')
+    d1 = int(d1)
 
-    while True:
-        try:
-            d1 = check_value_is_number(d1)
-            break
-        except ValueError as e:
-            logger.error("exception is %s", ValueError)
-            print(e)
-            d1 = input('Если хотите закрыть калькулятор, введите "exit" или введите d1: ')
-            if d1 == 'exit':
-                return print('Функция поиска случайного числа в диапазоне завершила свою работу')
+    if d1 == 'стоп':
+        return
 
-    d2 = input('Введите левую границу диапазона, d2: ')
-    logger.debug("d2 is %s", d2)
+    d2 = ''
+    d2 = check_value_is_number(d2, 'd2', 'Функция поиска случайного числа в диапазоне')
+    d2 = int(d2)
 
-    while True:
-        try:
-            d2 = check_value_is_number(d2)
-            break
-        except ValueError as e:
-            logger.error("exception is %s", ValueError)
-            print(e)
-            d2 = input('Если хотите закрыть калькулятор, введите "exit" или введите d2: ')
-            if d2 == 'exit':
-                return print('Функция поиска случайного числа в диапазоне завершила свою работу')
+    if d2 == 'стоп':
+        return
 
     result = 0
 
@@ -198,13 +166,13 @@ def arithmetic_mean():
 
     for i in range(len(lst)):
         try:
-            check_value_is_number(lst[i])
+            check_value_is_number(lst[i], lst[i], 'Функция вычисления среднего арифметического из списка чисел')
             logger.debug("lst[i] is %s", lst[i])
             logger.debug("i is %s", i)
             lst[i] = int(lst[i])
             continue
         except ValueError:
-            print(f'{i+1} по счёту элемент списка Вы ввели не число, либо введите "продолжить" и повторите ввод списка чисел заново, ')
+            print(f'{i+1} по счёту элемент списка не число, введите "продолжить" и повторите ввод списка чисел, ')
             stop = input('либо введите "стоп" для выхода из программы: ')
             if stop == 'стоп':
                 return print('Вы остановили вычисление среднего арифметического из списка чисел.')
