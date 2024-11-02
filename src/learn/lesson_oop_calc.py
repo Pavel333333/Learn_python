@@ -64,6 +64,7 @@ vasya.voice()
 
 # Прочитайте статью и выполните действия, которые в ней прописаны
 
+
 class Parent:
 
     def __init__(self):
@@ -90,9 +91,13 @@ child.parent_method()
 class B:
     def b(self):
         print('b')
+
+
 class C:
     def c(self):
         print('c')
+
+
 class D(B, C):
     def d(self):
         print('d')
@@ -160,7 +165,7 @@ print(td.vocab)
 print(td.word_count)
 
 # Реализуйте класс Dog. Придумайте, какие переменные будет принимать данный класс
-# и какие методы будут реализованы. Реализуйте в этом классе паттерн Singleton
+# и какие методы будут реализованы. Реализуйте в этом классе паттерн Singleton.
 
 
 class Dog:
@@ -248,9 +253,9 @@ class PeopleList:
                 self.append(user_input)
         print(f"Текущий список: {self._list}")
 
-    @property
-    def list(self):
-        return self._list
+    # @property
+    # def list(self):
+    #     return self._list
 
 
 people = PeopleList()
@@ -265,7 +270,7 @@ for name in people._list:
 
 
 # Напишите класс, содержит 3 любые атрибута и
-# при изменении логгировать всё в консоль (при изменении старое->новое)
+# при изменении логировать всё в консоль (при изменении старое->новое)
 
 
 class ChangeLogger:
