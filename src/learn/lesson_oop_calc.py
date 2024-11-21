@@ -279,7 +279,7 @@ class ChangeLogger:
         self.name = name_attr
         self.value = None
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance):
         return self.value
 
     def __set__(self, instance, value):

@@ -89,7 +89,7 @@ class Car(MeansOfTransport):
 
     def __pos__(self):
         if self.wheels_number != 4:
-            return f'у машины не может быть столько колёс: {self.wheels_number} '
+            return f'у машины не может быть столько колёс: {self.wheels_number}'
         return self.wheels_number
 
     def __neg__(self):
@@ -303,4 +303,7 @@ copy_l4 = deepcopy(l4)
 copy_l4[3] = 7
 print(copy_l4[3])
 print(l4[3])
+print(Moped.way_time(100, 50))
+m = Moped('java', 'red', 2)
+print(m.way_time(100, 25))
 
