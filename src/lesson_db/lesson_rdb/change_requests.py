@@ -1,6 +1,6 @@
 import re
 
-file_path = '/Learn_python/src/db/lesson_rdb/Requests2.sql'
+file_path = '/Learn_python/src/lesson_db/lesson_rdb/Requests2.sql'
 
 with open(file_path, 'r', encoding='UTF-8') as file:
     lines = file.readlines()
